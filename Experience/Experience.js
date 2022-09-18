@@ -20,22 +20,15 @@ export default class Experience {
     this.time = new Time()
     this.renderer = new Renderer()
     this.dt = 0
-    this.tick()
+
+    this.time.on('update', () => {
+      this.update()
+    })
   }
 
-  tick() {
-
-    this.dt += this.clock.getDelta()
-    if(this.dt < this.delta) return
-
-    this.update()
-
-    window.requestAnimationFrame(this.tick)
-    this.dt = 0
-  }
+  
   update() {
-    console.log('updating')
-    // this.camera.update()
-    // this.renderer.update()
+    this.camera.update()
+    this.renderer.update()
   }
 }
