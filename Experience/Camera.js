@@ -8,13 +8,15 @@ export default class Camera {
     this.sizes = this.experience.sizes
     this.canvas = this.experience.canvas
     this.scene = this.experience.scene
+    this.camera = null
 
     this.createPerspectiveCamera()
     this.createOrthographicCamera()
   }
 
   update() {
-    
+    this.perspectiveCamera.updateProjectionMatrix()
+    this.orthographicCamera.updateProjectionMatrix()
   }
 
   createPerspectiveCamera() {
@@ -25,6 +27,8 @@ export default class Camera {
       1000
     )
     this.scene.add(this.perspectiveCamera)
+    this.perspectiveCamera.rotation.y = Math.PI
+
   }
   createOrthographicCamera() {
     this.frustrum = 5
@@ -37,6 +41,7 @@ export default class Camera {
       100
     )
     this.scene.add(this.orthographicCamera)
+
   }
 
   resize() {

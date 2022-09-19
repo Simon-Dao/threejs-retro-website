@@ -4,6 +4,7 @@ import Camera from './Camera'
 import Renderer from './Renderer'
 import Time from './Utils/Time'
 import {EventEmitter} from 'events'
+import World from './World/World'
 
 export default class Experience {
   static instance
@@ -28,9 +29,12 @@ export default class Experience {
     this.sizes.on('resize', () => {
       this.resize()
     })
+
+    this.world = new World()
   }
   
   update() {
+    //console.log(this.world.cube.mesh.position)
     this.camera.update()
     this.renderer.update()
   }
