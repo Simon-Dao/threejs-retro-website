@@ -8,7 +8,6 @@ export default class Entity extends Object {
     this.geometry = new THREE.BoxGeometry(this.size,this.size,this.size)
     this.material = new THREE.MeshBasicMaterial({color: this.color})
     this.mesh = new THREE.Mesh(this.geometry, this.material)
-    this.mesh.castShadow = true
     this.setPosition(position)
     this.setRotation(rotation)
   }
@@ -16,6 +15,8 @@ export default class Entity extends Object {
   setEntity() {
     this.setPosition(this.position)
     this.setRotation(this.rotation)
+    this.mesh.castShadow = true
+    this.mesh.receiveShadow = true
   }
 
   setPosition(position) {
@@ -23,7 +24,6 @@ export default class Entity extends Object {
     if(position.length != 3) return
 
     this.mesh.position.set(position[0],position[1],position[2])
-
   }
 
   setRotation(rotation) {

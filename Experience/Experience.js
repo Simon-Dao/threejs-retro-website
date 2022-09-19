@@ -16,6 +16,7 @@ export default class Experience {
     
     this.canvas = canvas
     this.scene = new THREE.Scene()
+    this.scene.background = new THREE.Color('#ffe9ec')
     this.sizes = new Sizes()
     this.camera = new Camera()
     this.time = new Time()

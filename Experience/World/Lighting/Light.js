@@ -27,11 +27,11 @@ export default class Light extends Object {
         break
     }
 
+    this.light.castShadow = true
+    this.light.intensity = 2
     this.light.position.set(position[0], position[1], position[2])
     this.light.rotation.set(rotation[0], rotation[1], rotation[2])
     
-    console.log(this.light)
-
     this.scene.add(this.light);
     if(helperOn) this.scene.add(this.helper)
   }
