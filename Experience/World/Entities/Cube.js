@@ -3,21 +3,23 @@ import Entity from './Entity'
 
 export default class Cube extends Entity  {
 
-  constructor(position, rotation, size) {
+  //this is an example of an Entity
+  //copy the code in here and make your own custom entity
+  constructor(position, rotation, size, color) {
     super(position,rotation)
 
+    this.color = color ?? this.color
     this.size = size
-    this.color = 'white'
     this.geometry = new THREE.BoxGeometry(this.size,this.size,this.size)
-    this.material = new THREE.MeshBasicMaterial({color:this.color})
+    this.material = new THREE.MeshStandardMaterial({color:this.color})
     this.mesh = new THREE.Mesh(this.geometry,this.material)
-    this.setPosition(position)
-    this.setRotation(rotation)
     this.scene.add(this.mesh)
+    this.setEntity()
   }
 
   update() {
-    
+    this.mesh.rotation.y += Math.PI / 180
+    this.mesh.rotation.z += Math.PI / 180
   }
 
   resize() {

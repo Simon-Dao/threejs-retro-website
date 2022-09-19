@@ -4,10 +4,18 @@ import Object from '../Object'
 export default class Entity extends Object {
   constructor(position, rotation) {
     super(position,rotation)
-
+    
     this.geometry = new THREE.BoxGeometry(this.size,this.size,this.size)
     this.material = new THREE.MeshBasicMaterial({color: this.color})
     this.mesh = new THREE.Mesh(this.geometry, this.material)
+    this.mesh.castShadow = true
+    this.setPosition(position)
+    this.setRotation(rotation)
+  }
+
+  setEntity() {
+    this.setPosition(this.position)
+    this.setRotation(this.rotation)
   }
 
   setPosition(position) {

@@ -27,8 +27,9 @@ export default class Camera {
       1000
     )
     this.scene.add(this.perspectiveCamera)
-    this.perspectiveCamera.rotation.y = Math.PI
 
+    this.perspectiveCamera.position.set(0,8,-16)
+    this.perspectiveCamera.rotation.set( 20 * Math.PI / 180,Math.PI, 0)
   }
   createOrthographicCamera() {
     this.frustrum = 5

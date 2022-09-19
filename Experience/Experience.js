@@ -34,7 +34,7 @@ export default class Experience {
   }
   
   update() {
-    //console.log(this.world.cube.mesh.position)
+    this.world.update()
     this.camera.update()
     this.renderer.update()
   }
