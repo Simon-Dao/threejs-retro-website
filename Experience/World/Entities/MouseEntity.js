@@ -15,11 +15,11 @@ export default class MouseEntity extends Entity  {
     this.mesh = new THREE.Mesh(this.geometry,this.material)
     this.scene.add(this.mesh)
     this.setEntity()
-    this.hoverAnim = new MouseAnim(this)
+    this.animation = new MouseAnim(this)
   }
 
   update() {
-    this.hoverAnim.update()
+    this.animation.update()
   }
 
   resize() {

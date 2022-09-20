@@ -11,6 +11,7 @@ import DiskAnim from '../Animations/DiskAnim'
 import DiskEntity from './Entities/DiskEntity'
 import { DiscreteInterpolant } from 'three'
 import MouseEntity from './Entities/MouseEntity'
+import MouseAnim from '../Animations/MouseAnim'
 
 export default class World extends Object {
 
@@ -18,7 +19,6 @@ export default class World extends Object {
   static HOVER = 'hover'
   static selectedDisk = null
   static insertedDisk = null
-  static disks = []
 
   constructor() {
     super()
@@ -33,12 +33,12 @@ export default class World extends Object {
     let ambientLight2 = new Light(LightType.AMBIENT, [5, -3, 0], [0, 0, 0])
     this.entitiesSelected = this.experience.mouseInput.meshesSelected
 
-    World.disks = [
+    let disks = [
       new DiskEntity([3, -1.6, 1], [0, degToRad(15), 0], [1.5, 0.2, 1.5], '#4e3816'),
       new DiskEntity([0, -1.6, .7], [0, degToRad(-5), 0], [1.5, 0.2, 1.5], '#4e3816'),
-      new DiskEntity([6, -1.6, 1], [0, degToRad(-10), 0], [1.5, 0.2, 1.5], '#4e3816'),
+      //new DiskEntity([6, -1.6, 1], [0, degToRad(-10), 0], [1.5, 0.2, 1.5], '#4e3816'),
     ]
-
+    disks.forEach(disk => {disk.animation.addInstance()})
     this.objects = [
       computer,
       sunLight,
@@ -47,7 +47,7 @@ export default class World extends Object {
       ambientLight2,
       this.mouse,
       keyboard,
-      World.disks
+      disks
     ]
   }
 
@@ -56,37 +56,17 @@ export default class World extends Object {
   }
 
   update() {
-    this.entitiesSelected = this.experience.mouseInput.meshesSelected
-
-    this.entitiesSelected.forEach((entity, i) => {
-
-      if (entity.object.name == World.DISK) {
-        let disk = World.disks.filter(disk => disk.mesh === entity.object)[0]
-        World.selectedDisk = disk
-
-        World.disks.forEach(disk => {
-          
-          if(disk != World.selectedDisk && disk.hoverAnim.stage < 3) {
-            disk.hoverAnim.stage = 0
-          }
-        })
-
-        disk.hoverAnim.start()
-      } else
-      if(entity.object.name == World.HOVER) {
-        
-        this.mouse.hoverAnim.start()
-      }
-    })
+    
 
     this.objects.forEach((object, i) => {
       if(Array.isArray(object)) {
         object.forEach((element, i) => {
           element.update()
-          element.hoverAnim.update()
+          element.animation?.update()
         })
       } else {
         object.update()
+        object.animation?.update()
       }
     })
   }

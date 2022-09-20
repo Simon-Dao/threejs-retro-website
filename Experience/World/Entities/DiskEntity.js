@@ -17,7 +17,7 @@ export default class DiskEntity extends Entity  {
     this.mesh.name = World.DISK
     this.scene.add(this.mesh)
     this.setEntity()
-    this.hoverAnim = new DiskAnim(this)
+    this.animation = new DiskAnim(this)
   }
 
   update() {
