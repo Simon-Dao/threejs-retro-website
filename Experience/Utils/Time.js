@@ -9,10 +9,24 @@ export default class Time extends EventEmitter{
     this.experience = new Experience()
     this.start = Date.now()
     this.current = this.start
-    this.elapsedTime = 0
+    this.elapsed = 0
     this.delta = 17
 
+
+    this.timerStart = 0
+    this.timerNow = 0
+
     this.update()
+  }
+
+  startTimer() {
+    this.timerStart = Date.now()
+    return this.timerStart
+  }
+
+  elapsedTime() {
+    this.timerNow = Date.now() - this.timerStart
+    return this.timerNow
   }
 
   update() {

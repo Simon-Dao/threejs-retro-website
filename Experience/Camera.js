@@ -42,7 +42,6 @@ export default class Camera {
       100
     )
     this.scene.add(this.orthographicCamera)
-
   }
 
   resize() {

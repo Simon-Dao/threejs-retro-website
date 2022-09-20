@@ -3,15 +3,16 @@ import Sizes from './Utils/Size'
 import Camera from './Camera'
 import Renderer from './Renderer'
 import Time from './Utils/Time'
-import {EventEmitter} from 'events'
 import World from './World/World'
+import MouseInput from './Input/MouseInput'
+import WebListeners from './Web/WebListeners'
 
 export default class Experience {
   static instance
 
   constructor(canvas) {
     if (Experience.instance) { return Experience.instance }
-
+    
     Experience.instance = this
     
     this.canvas = canvas
@@ -21,7 +22,8 @@ export default class Experience {
     this.camera = new Camera()
     this.time = new Time()
     this.renderer = new Renderer()
-    this.dt = 0
+    this.mouseInput = new MouseInput()
+    this.webListeners = new WebListeners()
 
     this.time.on('update', () => {
       this.update()
@@ -35,6 +37,7 @@ export default class Experience {
   }
   
   update() {
+    this.mouseInput.update()
     this.world.update()
     this.camera.update()
     this.renderer.update()
