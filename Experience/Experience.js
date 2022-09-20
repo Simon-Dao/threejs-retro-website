@@ -6,13 +6,14 @@ import Time from './Utils/Time'
 import World from './World/World'
 import MouseInput from './Input/MouseInput'
 import WebListeners from './Web/WebListeners'
+import ZoomIntoScreenAnim from './Animations/ZoomIntoScreenAnim'
 
 export default class Experience {
   static instance
 
   constructor(canvas) {
     if (Experience.instance) { return Experience.instance }
-    
+
     Experience.instance = this
     
     this.canvas = canvas
@@ -34,6 +35,7 @@ export default class Experience {
     })
 
     this.world = new World()
+
   }
   
   update() {

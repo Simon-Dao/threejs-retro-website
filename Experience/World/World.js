@@ -10,10 +10,12 @@ import { degToRad } from 'three/src/math/MathUtils'
 import DiskAnim from '../Animations/DiskAnim'
 import DiskEntity from './Entities/DiskEntity'
 import { DiscreteInterpolant } from 'three'
+import MouseEntity from './Entities/MouseEntity'
 
 export default class World extends Object {
 
   static DISK = 'disk'
+  static HOVER = 'hover'
   static selectedDisk = null
   static insertedDisk = null
   static disks = []
@@ -23,7 +25,8 @@ export default class World extends Object {
 
     let table = new Rectangle([0, -2, 4], [Math.PI / 2, 0, 0], [17, 10, 0.6], '#765341')
     let computer = new Rectangle([-3.5, 0, 6], [0, degToRad(-3), 0], [4, 6, 5], 'green')
-    let mouse = new Rectangle([-6.5, -1.5, 2], [0, degToRad(25), 0], [.7, .5, 1], 'green')
+    this.mouse = new MouseEntity([-6.5, -1.5, 2], [0, degToRad(25), 0], [.7, .5, 1], 'green')
+
     let keyboard = new Rectangle([-3.1, -1.5, 1], [0, degToRad(-5), 0], [4, .4, 2], 'green')
     let sunLight = new Light(LightType.DIRECTION, [0, 5, 0], [0, 0, 0], !true)
     let ambientLight = new Light(LightType.AMBIENT, [2, 3, 0], [0, 0, 0])
@@ -42,7 +45,7 @@ export default class World extends Object {
       table,
       ambientLight,
       ambientLight2,
-      mouse,
+      this.mouse,
       keyboard,
       World.disks
     ]
@@ -56,6 +59,7 @@ export default class World extends Object {
     this.entitiesSelected = this.experience.mouseInput.meshesSelected
 
     this.entitiesSelected.forEach((entity, i) => {
+
       if (entity.object.name == World.DISK) {
         let disk = World.disks.filter(disk => disk.mesh === entity.object)[0]
         World.selectedDisk = disk
@@ -68,6 +72,10 @@ export default class World extends Object {
         })
 
         disk.hoverAnim.start()
+      } else
+      if(entity.object.name == World.HOVER) {
+        
+        this.mouse.hoverAnim.start()
       }
     })
 

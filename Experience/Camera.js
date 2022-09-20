@@ -9,6 +9,8 @@ export default class Camera {
     this.canvas = this.experience.canvas
     this.scene = this.experience.scene
     this.camera = null
+    this.origPos = [0,6,-13]
+    this.origRot = [ 20 * Math.PI / 180,Math.PI, 0]
 
     this.createPerspectiveCamera()
     this.createOrthographicCamera()

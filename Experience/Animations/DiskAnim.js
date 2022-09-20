@@ -2,9 +2,10 @@ import gsap from 'gsap'
 import Experience from '../Experience'
 import Animation from './Animation'
 import { degToRad } from 'three/src/math/MathUtils'
-import InsertAnim from './InsertAnim'
 import World from '../World/World'
 
+//this is complete spaghetti code, please fix this later  
+//preferably at a time when you aren't running off of 2 hours of sleep
 export default class DiskAnim extends Animation {
   constructor(entity) {
     super(entity)
