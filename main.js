@@ -1,4 +1,4 @@
-import Experience from "./Experience/Experience";
+import Experience from "./src/Experience/Experience";
 import './style.css'
 
 let canvas = document.querySelector('.experience-canvas')
