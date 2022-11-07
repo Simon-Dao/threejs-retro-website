@@ -59,10 +59,10 @@ export default class World extends Object {
   }
 
   update() {
-    VideoTexture.instances.forEach((instance) => {
-      instance.update()
-    }
-    )
+    // VideoTexture.instances.forEach((instance) => {
+    //   instance.update()
+    // }
+    //)
 
     this.objects.forEach((object, i) => {
 

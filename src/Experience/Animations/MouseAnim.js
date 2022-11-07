@@ -12,30 +12,21 @@ export default class MouseAnim extends Animation {
   constructor(entity) {
     super(entity)
     this.mesh.name = 'hover'
-    this.zoomedIn = true
     window.addEventListener('click', () => {
-      if(this.zoomedIn) {
+      if(!Experience.zoomedIn) {
         if(!this.mouseOverMesh(this.mesh)) return
         new ZoomIntoScreenAnim(this.experience.camera)
-        this.zoomedIn = false
+        Experience.zoomedIn = true
       } else {
           if(!this.mouseOverMesh(this.experience.world.computer.mesh)) return
           new ZoomOutScreenAnim(this.experience.camera)
-          this.zoomedIn = true
+          Experience.zoomedIn = false
         }
     })
   }
 
   update() {
     super.update()
-
-    /*
-    {
-            x:,
-            y:,
-            z:,
-            duration: ,
-          }*/
 
     this.meshesSelected.forEach((element, i) => {
       if(element.object.name !== this.mesh.name) return

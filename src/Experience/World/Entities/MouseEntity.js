@@ -17,4 +17,8 @@ export default class MouseEntity extends Entity  {
     this.setEntity()
     this.animation = new MouseAnim(this)
   }
+
+  update() {
+    super.update()
+  }
 }

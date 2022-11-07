@@ -8,9 +8,11 @@ import MouseInput from './Input/MouseInput'
 import WebListeners from './Web/WebListeners'
 import ZoomIntoScreenAnim from './Animations/ZoomIntoScreenAnim'
 import Textures from './Textures/Textures'
+import Website from './UI/Website'
 
 export default class Experience {
   static instance
+  static zoomedIn = false
 
   constructor(canvas) {
     if (Experience.instance) { return Experience.instance }
@@ -27,6 +29,7 @@ export default class Experience {
     this.mouseInput = new MouseInput()
     this.webListeners = new WebListeners()
 
+
     this.time.on('update', () => {
       this.update()
     })
@@ -36,14 +39,16 @@ export default class Experience {
     })
 
     this.world = new World()
-
+    this.website = new Website()
   }
-  
+
   update() {
-    this.mouseInput.update()
-    this.world.update()
-    this.camera.update()
-    this.renderer.update()
+
+      this.mouseInput.update()
+      this.world.update()
+      this.camera.update()
+      this.renderer.update()
+      this.website.update()
   }
 
   resize() {

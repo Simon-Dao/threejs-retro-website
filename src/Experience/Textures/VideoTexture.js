@@ -2,56 +2,79 @@ import Experience from "../Experience";
 import * as THREE from 'three'
 import Sizes from "../Utils/Size";
 export default class VideoTexture {
-  
+
   static instances = []
 
   constructor() {
     this.experience = new Experience()
     VideoTexture.instances.push(this)
-    let path = 'public\\Textures\\desktop.mp4'
-    //this.desktopVid = new THREE.TextureLoader().load('public\\Textures\\desktop.mp4',)
+    this.path = 'public\\Textures\\desktop.mp4'
     var video = document.createElement('video');
-    video.src = path;
+    video.src = this.path;
     video.load();
-    video.play();
+    this.updateFcts = []
+    this.video;
+    this.videoImageContext;
+    this.videoImage;
+    this.videoTexture;
+
+    this.THREEx = {}
+    this.THREEx.VideoTexture = function (url) {
+      video = document.createElement('video');
+
+      video.autoplay = true;
+      video.loop = true;
+      video.src = 'desktop.mp4';
+      video.load();
+      video.play();
+
+      videoImage = document.createElement('canvas');
+      videoImage.width = 320;
+      videoImage.height = 240;
+      videoImageContext = videoImage.getContext('2d');
+      videoImageContext.fillStyle = '#000000';
+      videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
+
+      this.texture = new THREE.Texture(videoImage);
+      this.texture.minFilter = THREE.LinearFilter;
+      this.texture.magFilter = THREE.LinearFilter;
+
+      this.destroy = function () {
+        video.pause()
+      }
+    }
 
     //make your video canvas
-    var videocanvas = document.querySelector('.experience-canvas');
-    //var videocanvasctx = videocanvas.getContext('2d');
+    this.videocanvas = document.querySelector('.experience-canvas');
 
     //set its size
-    videocanvas.width = window.innerWidth;
-    videocanvas.height = window.innerHeight;
-
-    //draw a black rectangle so that your spheres don't start out transparent
-   // videocanvasctx.fillStyle = "#000000";
-   // videocanvasctx.fillRect(0, 0, 640, 480);
-
-    //add canvas to new texture
-    this.texture = new THREE.Texture(videocanvas);
-
-    //add texture to material that will be wrapped around the sphere
-    var material = new THREE.MeshBasicMaterial({ map: this.texture, overdraw: 0.5 });
-
-
-    //Use whatever values you were using for the sizes of the spheres before
-    var sphere = new THREE.BoxGeometry(5,5,5)
-
-    //make a mesh from the material and the geometry (the sphere)
-    var sphereMesh = new THREE.Mesh(sphere, material);
-    sphereMesh.material.color = 'orange'
-    sphereMesh.position.set(-5,2,0)
-    this.experience.scene.add(sphereMesh)
-    //Run your render function, checking the video for data and writing it to the canvas if there is any (this assumes you already have your video on the page and its element saved to the variable 'video'
+    this.videocanvas.width = window.innerWidth;
+    this.videocanvas.height = window.innerHeight;
+  }
+  createVideo() {
+    this.videoTexture = new THREEx.VideoTexture(this.path)
+    updateFcts.push(function (delta, now) {
+      this.videoTexture.update(delta, now)
+    });
+    var geometry = new THREE.BoxGeometry(50, 50, 10);
+    var material = new THREE.MeshBasicMaterial({
+      map: this.videoTexture.texture,
+      side: THREE.DoubleSide
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.rotation.set(0, 2, 0)
+    scene.add(mesh);
+    updateFcts.push(function (delta, now) {
+      mesh.rotation.x += 1 * delta;
+      mesh.rotation.y += 2 * delta;
+    });
   }
 
   update() {
-    //check for vid data
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
-      //draw video to canvas starting from upper left corner
-      //videocanvasctx.drawImage(video, 0, 0);
-      //tell texture object it needs to be updated
-      this.texture.needsUpdate = true;
+      videoImageContext.drawImage(video, 0, 0);
+      if (videoTexture)
+        videoTexture.texture.needsUpdate = true;
     }
   }
 }

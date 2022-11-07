@@ -6,7 +6,9 @@ import { degToRad } from 'three/src/math/MathUtils'
 export default class ZoomIntoScreenAnim extends Animation {
   constructor(camera) {
     super(camera)
+    this.experience = new Experience()
     this.camera = camera.perspectiveCamera
+    
     gsap.to(this.camera.position, {
       x: -3.42,
       y: 1,
@@ -17,7 +19,8 @@ export default class ZoomIntoScreenAnim extends Animation {
       x: 0,
       y: degToRad(180),
       z: 0,
-      duration: .5
+      duration: .5,
+      onComplete: this.experience.website.show()
     })
   }
 
