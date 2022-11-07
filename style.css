@@ -4,8 +4,12 @@
   box-sizing: border-box;
 }
 
+body {
+  overflow: hidden;
+}
+
 .experience {
-  position: fixed;
+  position: absolute;
   width: 100vw;
   height: 100vh;
 }
@@ -13,4 +17,20 @@
 .experience-canvas {
   width: 100%;
   height: 100%;
+}
+
+.insert-button {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  display: none;
+}
+
+#overlay {
+  position: absolute;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
